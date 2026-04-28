@@ -1,11 +1,15 @@
 .custom-card{
     width: 200px;
-    background-color: #ECEFF1;
+    background-color: #EEF1F3;
 }
 
 .custom-img{
     height: 180px;
     object-fit: cover;
+}
+
+.card-body{
+    font-family:sans-serif;
 }
 
 .text-truncate-multiline {
@@ -21,12 +25,20 @@
 
 .custom-card .card-title {
     font-size: 1rem;
+    color: #191970;
 }
 
 .custom-card .card-text {
-    font-size: 0.9rem;
+    font-size: 0.75rem;
 }
 
 .card-footer{
-    background-color: ;
+    background-color: #E0E3E5;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid #000000;
+    margin: 1rem 0;
+    opacity: 0.1;
 }

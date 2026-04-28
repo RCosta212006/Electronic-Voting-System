@@ -6,12 +6,13 @@ function ElectionCard({election}){
                 <img src={election.image} className="card-img-top custom-img" alt="Teste" />
 
                 <div className="card-body">
-                    <h5 className="card-title">{election.title}</h5>
+                    <h2 className="card-title">{election.title}</h2>
                     <p className="card-text text-truncate-multiline">{election.description}</p>
+                    <hr className="divider"></hr>
                     <small className="text-body-secondary">Closes in: {election.datatime_closes}</small>
                 </div>
 
-                <div className="card-footer">
+                <div className="card-footer border-0">
                     <strong>Enter Voting Booth →</strong>
                 </div>
             </div>
