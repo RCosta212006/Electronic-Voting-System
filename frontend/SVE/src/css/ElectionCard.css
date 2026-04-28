@@ -1,0 +1,32 @@
+.custom-card{
+    width: 200px;
+    background-color: #ECEFF1;
+}
+
+.custom-img{
+    height: 180px;
+    object-fit: cover;
+}
+
+.text-truncate-multiline {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.custom-card .card-body {
+    padding: 0.75rem;
+}
+
+.custom-card .card-title {
+    font-size: 1rem;
+}
+
+.custom-card .card-text {
+    font-size: 0.9rem;
+}
+
+.card-footer{
+    background-color: ;
+}
