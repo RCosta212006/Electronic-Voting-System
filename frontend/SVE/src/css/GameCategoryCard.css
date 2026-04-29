@@ -1,6 +1,9 @@
 .custom-card{
     width: 200px;
     background-color: #EEF1F3;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .custom-img{
@@ -21,6 +24,9 @@
 
 .custom-card .card-body {
     padding: 0.75rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .custom-card .card-title {
@@ -34,11 +40,31 @@
 
 .card-footer{
     background-color: #E0E3E5;
+    margin-top: auto;
 }
 
 .divider {
     border: none;
     border-top: 1px solid #000000;
     margin: 1rem 0;
+    opacity: 0.1;
+}
+
+.close-date {
+    margin-top: auto;
+}
+
+.card-content {
+    flex-grow: 1;
+}
+
+.card-bottom {
+    margin-top: auto;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid #000000;
+    margin: 0.5rem 0;
     opacity: 0.1;
 }
