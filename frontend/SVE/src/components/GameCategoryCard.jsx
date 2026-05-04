@@ -9,7 +9,7 @@ function GameCategoryCard({ category }) {
             : category.name;
 
     return (
-        <div className="card h-100 custom-card">
+        <div className="card h-100 w-100 custom-card">
             <img src={category.image} className="card-img-top custom-img" alt={title} />
 
             <div className="card-body">
