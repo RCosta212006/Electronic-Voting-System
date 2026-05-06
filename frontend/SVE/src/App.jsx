@@ -3,6 +3,7 @@ import WhiteHouse from "./images/WhiteHouse.jpg";
 import GameCategoryCard from "./components/GameCategoryCard";
 import Categories from "./pages/Categories";
 import NavBar from "./components/NavBar";
+import LowScrollBar from "./components/LowScrollBar";
 
 function App(){
 
@@ -10,6 +11,7 @@ function App(){
     <div>
       <NavBar></NavBar>
       <Categories></Categories>
+      <LowScrollBar></LowScrollBar>
     </div>
   )
 }

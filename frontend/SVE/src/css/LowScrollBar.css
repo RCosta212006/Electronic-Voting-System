@@ -1,0 +1,58 @@
+.low-scrollbar {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 40px;
+    margin-top: 40px;
+}
+
+.category-nav-button {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    background: transparent;
+    border: none;
+
+    cursor: pointer;
+}
+
+.category-nav-text {
+    display: flex;
+    flex-direction: column;
+
+    line-height: 1.1;
+    text-align: left;
+}
+
+.right-text {
+    text-align: right;
+}
+
+.category-nav-text span {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.category-nav-text strong {
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.arrow-box {
+    width: 64px;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #ccc;
+    border-radius: 16px;
+
+    font-size: 2rem;
+}
