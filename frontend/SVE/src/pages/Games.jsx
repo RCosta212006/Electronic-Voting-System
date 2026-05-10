@@ -1,4 +1,5 @@
 import GameList from "../components/GameList";
+import LowScrollBar from "../components/LowScrollBar";
 
 function Games(){
     const games = [
@@ -42,13 +43,14 @@ function Games(){
 
     return (
         <>
-            <div className="p-4 mt-5">
+            <div className="p-4 mt-0">
                 <small>Premiação 2026</small>
                 <h1>Jogos</h1>
             </div>
 
             <div className="container">
-                <GameList games={games} />
+                <GameList games={games}/>
+                <LowScrollBar></LowScrollBar>
             </div>
         </>
     );
