@@ -5,6 +5,7 @@ import Categories from "./pages/Categories";
 import NavBar from "./components/NavBar";
 import LowScrollBar from "./components/LowScrollBar";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App(){
 
@@ -15,7 +16,7 @@ function App(){
       <Categories></Categories>
       <LowScrollBar></LowScrollBar>
       */}
-      <Login></Login>
+      <Register></Register>
     </div>
   )
 }

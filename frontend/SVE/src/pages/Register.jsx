@@ -3,7 +3,7 @@ import logoImage from "../images/Logo.png";
 import AuthForm from "../components/AuthForm";
 import "../css/Login.css";
 
-function Login() {
+function Register() {
 
     return (
         <section className="login-page">
@@ -18,7 +18,7 @@ function Login() {
                         className="login-logo"
                     />
 
-                    <AuthForm mode="login" />
+                    <AuthForm mode="register" />
 
                 </div>
 
@@ -36,4 +36,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default Register;
