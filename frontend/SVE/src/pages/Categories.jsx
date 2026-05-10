@@ -1,4 +1,5 @@
-import GameCategoryList from "../components/GameCategoryList";
+import CategoryList from "../components/CategoryList";
+import GameList from "../components/GameList";
 import whiteHouse from "../images/WhiteHouse.jpg";
 
 function Categories() {
@@ -76,7 +77,7 @@ function Categories() {
             </div>
 
             <div className="container">
-                <GameCategoryList categories={categories} />
+                <CategoryList data={categories} />
             </div>
         </>
     );
