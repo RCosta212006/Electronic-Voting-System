@@ -13,7 +13,7 @@ import Games from "./pages/Games";
 function App(){
 
   return(
-    <Register/>
+    <Games/>
   )
 }
 
