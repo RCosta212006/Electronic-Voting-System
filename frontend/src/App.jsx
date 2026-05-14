@@ -17,30 +17,20 @@ function App() {
 
   return (
     <BrowserRouter>
+            <NavBar />
 
-      <NavBar />
+            <Routes>
+                <Route path="/" element={<Categories />} />
+                <Route path="/categories" element={<Categories />} />
+                <Route path="/games/:categoryId" element={<Games />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/creators" element={<Creators />} />
+            </Routes>
 
-      <LowScrollBar />
-
-      <Routes>
-
-        <Route path="/" element={<Home />} />
-
-        <Route path="/categories" element={<Categories />} />
-
-        <Route path="/games/:categoryId" element={<Games />} />
-
-        <Route path="/login" element={<Login />} />
-
-        <Route path="/register" element={<Register />} />
-
-        <Route path="/about" element={<About />} />
-
-        <Route path="/creators" element={<Creators />} />
-
-      </Routes>
-
-    </BrowserRouter>
+            <LowScrollBar />
+        </BrowserRouter>
   );
 }
 

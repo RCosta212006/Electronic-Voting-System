@@ -1,21 +1,58 @@
+import { useEffect, useState } from "react";
 import CategoryList from "../components/CategoryList";
-import GameList from "../components/GameList";
-import LowScrollBar from "../components/LowScrollBar";
-import NavBar from "../components/NavBar";
-import whiteHouse from "../images/WhiteHouse.jpg";
 
 function Categories() {
-    
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        async function loadCategories() {
+            try {
+                setLoading(true);
+                setError("");
+
+                const response = await fetch("http://localhost:8000/categories/");
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.detail || "Erro ao carregar categorias.");
+                }
+
+                setCategories(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        loadCategories();
+    }, []);
+
     return (
         <>
             <div className="p-4 mt-0">
-                <NavBar/>
                 <small>Premiação 2026</small>
                 <h1>Categorias</h1>
             </div>
 
             <div className="container">
-                <CategoryList categories={categories} />
+                {loading && <p>A carregar categorias...</p>}
+
+                {error && (
+                    <div className="alert alert-danger">
+                        {error}
+                    </div>
+                )}
+
+                {!loading && !error && categories.length === 0 && (
+                    <p>Ainda não existem categorias.</p>
+                )}
+
+                {!loading && !error && categories.length > 0 && (
+                    <CategoryList categories={categories} />
+                )}
             </div>
         </>
     );

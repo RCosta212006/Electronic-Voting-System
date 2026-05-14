@@ -66,7 +66,6 @@ function Games() {
                     <GameList games={games} />
                 )}
 
-                <LowScrollBar />
             </div>
         </>
     );
