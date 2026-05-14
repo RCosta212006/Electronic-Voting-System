@@ -26,7 +26,7 @@ function GameCard({ data, type }) {
                     <div className="card-bottom">
                         <hr className="divider" />
                         <small className="text-body-secondary close-date">
-                            Closes in: {data.datatime_closes}
+                            Closes in: {data.datetime_closes}
                         </small>
                     </div>
 

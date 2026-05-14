@@ -1,20 +1,47 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Home from "./pages/Home";
-import WhiteHouse from "./images/WhiteHouse.jpg";
-import GameCard from "./components/GameCard";
-import GameList from "./components/GameList";
-import CategoryList from "./components/CategoryList";
 import Categories from "./pages/Categories";
-import NavBar from "./components/NavBar";
-import LowScrollBar from "./components/LowScrollBar";
+import Games from "./pages/Games";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Games from "./pages/Games";
+import About from "./pages/About";
+import Creators from "./pages/Creators";
 
-function App(){
+import NavBar from "./components/NavBar";
+import LowScrollBar from "./components/LowScrollBar";
 
-  return(
-    <Games/>
-  )
+import "./App.css";
+
+function App() {
+
+  return (
+    <BrowserRouter>
+
+      <NavBar />
+
+      <LowScrollBar />
+
+      <Routes>
+
+        <Route path="/" element={<Home />} />
+
+        <Route path="/categories" element={<Categories />} />
+
+        <Route path="/games/:categoryId" element={<Games />} />
+
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/register" element={<Register />} />
+
+        <Route path="/about" element={<About />} />
+
+        <Route path="/creators" element={<Creators />} />
+
+      </Routes>
+
+    </BrowserRouter>
+  );
 }
 
 export default App;
