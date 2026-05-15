@@ -8,26 +8,39 @@ function Games() {
     const { categoryId } = useParams();
 
     const [games, setGames] = useState([]);
+    const [category, setCategory] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
     useEffect(() => {
-        async function loadGames() {
+        async function loadData() {
             try {
                 setLoading(true);
                 setError("");
 
-                const response = await fetch(
+                const categoryResponse = await fetch(
+                    `http://localhost:8000/categories/${categoryId}`
+                );
+
+                const categoryData = await categoryResponse.json();
+
+                if (!categoryResponse.ok) {
+                    throw new Error(categoryData.detail || "Erro ao carregar categoria.");
+                }
+
+                setCategory(categoryData);
+
+                const gamesResponse = await fetch(
                     `http://localhost:8000/categories/${categoryId}/games`
                 );
 
-                const data = await response.json();
+                const gamesData = await gamesResponse.json();
 
-                if (!response.ok) {
-                    throw new Error(data.detail || "Erro ao carregar jogos.");
+                if (!gamesResponse.ok) {
+                    throw new Error(gamesData.detail || "Erro ao carregar jogos.");
                 }
 
-                setGames(data);
+                setGames(gamesData);
 
             } catch (err) {
                 setError(err.message);
@@ -37,16 +50,23 @@ function Games() {
         }
 
         if (categoryId) {
-            loadGames();
+            loadData();
         }
     }, [categoryId]);
 
     return (
         <>
-            <NavBar/>
+            <NavBar></NavBar>
             <div className="p-4 mt-0">
-                <small>Premiação 2026</small>
-                <h1>Jogos</h1>
+                <h1>
+                    {category ? category.name : "Jogos"}
+                </h1>
+
+                {category && (
+                    <p className="text-muted">
+                        {category.description}
+                    </p>
+                )}
             </div>
 
             <div className="container">
@@ -66,6 +86,7 @@ function Games() {
                     <GameList games={games} />
                 )}
 
+                <LowScrollBar />
             </div>
         </>
     );

@@ -17,8 +17,6 @@ function App() {
 
   return (
     <BrowserRouter>
-            <NavBar />
-
             <Routes>
                 <Route path="/" element={<Categories />} />
                 <Route path="/categories" element={<Categories />} />
@@ -28,8 +26,6 @@ function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/creators" element={<Creators />} />
             </Routes>
-
-            <LowScrollBar />
         </BrowserRouter>
   );
 }

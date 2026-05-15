@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import CategoryList from "../components/CategoryList";
+import NavBar from "../components/NavBar";
 
 function Categories() {
     const [categories, setCategories] = useState([]);
@@ -32,8 +33,8 @@ function Categories() {
 
     return (
         <>
+            <NavBar/>
             <div className="p-4 mt-0">
-                <small>Premiação 2026</small>
                 <h1>Categorias</h1>
             </div>
 
