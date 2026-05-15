@@ -1,4 +1,39 @@
+:root {
+    --navbar-height: 20px;
+    --page-x-padding: clamp(1rem, 3vw, 2rem);
+    --page-y-padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+html,
+body,
+#root {
+    height: 100%;
+}
+
 body {
-    padding-bottom: 100px;
-    padding-top: 80px;
+    margin: 0;
+}
+
+.page-with-navbar {
+    padding-top: var(--navbar-height);
+}
+
+.page-header {
+    padding: var(--page-y-padding) var(--page-x-padding);
+}
+
+.page-header h1 {
+    margin: 0.5rem 0 0;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+}
+
+.page-header p {
+    margin-top: 0.75rem;
+    max-width: 700px;
+}
+
+.page-container {
+    width: min(100% - 2rem, 1200px);
+    margin-inline: auto;
 }

@@ -34,11 +34,11 @@ function Categories() {
     return (
         <>
             <NavBar/>
-            <div className="p-4 mt-0">
+            <div className="page-header">
                 <h1>Categorias</h1>
             </div>
 
-            <div className="container">
+            <div className="page-container">
                 {loading && <p>A carregar categorias...</p>}
 
                 {error && (

@@ -57,7 +57,7 @@ function Games() {
     return (
         <>
             <NavBar></NavBar>
-            <div className="p-4 mt-0">
+            <div className="page-header">
                 <h1>
                     {category ? category.name : "Jogos"}
                 </h1>
@@ -69,7 +69,7 @@ function Games() {
                 )}
             </div>
 
-            <div className="container">
+            <div className="page-container">
                 {loading && <p>A carregar jogos...</p>}
 
                 {error && (

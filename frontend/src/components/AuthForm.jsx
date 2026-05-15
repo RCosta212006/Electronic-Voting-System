@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function AuthForm({ mode }) {
 
     const isRegister = mode === "register";
@@ -67,10 +69,10 @@ function AuthForm({ mode }) {
                 {isRegister
                     ? "Already have an account? "
                     : "Don't have an account? "}
-
-                <a href="#!" className="link-info">
+                <Link to={isRegister ? "/login" : "/register"}>
                     {isRegister ? "Log in" : "Register here"}
-                </a>
+                </Link>
+
             </p>
 
         </form>
