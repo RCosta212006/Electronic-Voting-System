@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import About from "./pages/About";
 import Creators from "./pages/Creators";
+import Game from "./pages/Game";
 
 import "./App.css";
 
@@ -27,6 +28,7 @@ function AppContent() {
                     <Route path="/" element={<Categories />} />
                     <Route path="/categories" element={<Categories />} />
                     <Route path="/games/:categoryId" element={<Games />} />
+                    <Route path="/game/:gameId" element={<Game />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/about" element={<About />} />

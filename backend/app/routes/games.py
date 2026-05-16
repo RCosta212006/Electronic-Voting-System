@@ -4,15 +4,29 @@ from bson import ObjectId
 from app.database import games_collection, categories_collection
 from app.models.game import GameCreate
 
+
 router = APIRouter(prefix="/games", tags=["games"])
 
 def game_to_dict(game):
+    category_ids = game.get("category_ids", [])
+
+    categories = list(categories_collection.find({
+        "_id": {"$in": [ObjectId(category_id) for category_id in category_ids]}
+    }))
+
     return {
         "id": str(game["_id"]),
         "name": game["name"],
         "description": game["description"],
         "image": game["image"],
-        "category_ids": game.get("category_ids", []),
+        "category_ids": category_ids,
+        "categories": [
+            {
+                "id": str(category["_id"]),
+                "name": category["name"]
+            }
+            for category in categories
+        ]
     }
 
 @router.get("/")
