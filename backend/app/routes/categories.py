@@ -21,6 +21,10 @@ def game_to_dict(game):
         "name": game["name"],
         "description": game["description"],
         "image": game["image"],
+        "developer": game["developer"],
+        "platforms": game["plataforms"],
+        "release_date": game["release_date"],
+        "user_score": game["user_score"],
         "category_ids": game.get("category_ids", []),
     }
 
@@ -55,7 +59,7 @@ def get_games_by_category(category_id: str):
         raise HTTPException(status_code=404, detail="Categoria não encontrada")
 
     games = games_collection.find({
-        "category_ids": category_id
+        "category_ids": {"$in": [category_id]}
     })
 
     return [game_to_dict(game) for game in games]

@@ -63,16 +63,11 @@ function Game() {
 
     return (
         <main className="game-detail-page">
-
+            
             <section className="game-hero">
                 <img src={game.image} alt={game.name} className="game-hero-image"/>
 
                 <div className="game-hero-content">
-                    <div className="game-meta">
-                        <span>Action Adventure</span>
-                        <span>2026 Nominee</span>
-                    </div>
-
                     <h1>{game.name}</h1>
 
                     <div className="game-info-row">
@@ -118,12 +113,6 @@ function Game() {
                 </div>
 
                 <aside className="game-sidebar">
-                    <div className="vote-panel">
-                        <button className="btn btn-info w-100">
-                            Cast Vote
-                        </button>
-                    </div>
-
                     <div className="release-panel">
                         <div>
                             <span>Release Date</span>
@@ -133,11 +122,6 @@ function Game() {
                         <div>
                             <span>User Score</span>
                             <strong>{game.user_score || "N/A"}</strong>
-                        </div>
-
-                        <div>
-                            <span>Game Consensus</span>
-                            <strong>{game.consensus || "Masterpiece"}</strong>
                         </div>
                     </div>
                 </aside>

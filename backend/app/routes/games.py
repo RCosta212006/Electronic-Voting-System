@@ -10,8 +10,10 @@ router = APIRouter(prefix="/games", tags=["games"])
 def game_to_dict(game):
     category_ids = game.get("category_ids", [])
 
+    object_category_ids = [ObjectId(category_id) for category_id in category_ids]
+
     categories = list(categories_collection.find({
-        "_id": {"$in": [ObjectId(category_id) for category_id in category_ids]}
+        "_id": {"$in": object_category_ids}
     }))
 
     return {
@@ -19,6 +21,10 @@ def game_to_dict(game):
         "name": game["name"],
         "description": game["description"],
         "image": game["image"],
+        "developer": game.get("developer", ""),
+        "plataforms": game.get("plataforms", ""),
+        "release_date": game.get("release_date", ""),
+        "user_score": game.get("user_score", 0),
         "category_ids": category_ids,
         "categories": [
             {
