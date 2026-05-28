@@ -1,6 +1,34 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { isAuthenticated, logoutUser } from "../services/authService";
 
 function NavBar() {
+    const navigate = useNavigate();
+    const [authenticated, setAuthenticated] = useState(isAuthenticated());
+
+    useEffect(() => {
+        function syncAuthState() {
+            setAuthenticated(isAuthenticated());
+        }
+
+        window.addEventListener("auth-changed", syncAuthState);
+        window.addEventListener("storage", syncAuthState);
+
+        return () => {
+            window.removeEventListener("auth-changed", syncAuthState);
+            window.removeEventListener("storage", syncAuthState);
+        };
+    }, []);
+
+    function handleSignOut() {
+        logoutUser();
+        setAuthenticated(false);
+        window.dispatchEvent(new Event("auth-changed"));
+        navigate("/login");
+    }
+
     return (
         <nav className="navbar fixed-top navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid position-relative">
@@ -44,19 +72,31 @@ function NavBar() {
                             </Link>
                         </li>
                     </ul>
-                    <div className="d-flex gap-2">
-                        <Link to="/login">
-                            <button className="btn btn-outline-success">
-                                Login
+                    {authenticated ? (
+                        <div className="d-flex gap-2">
+                            <button
+                                className="btn btn-outline-danger"
+                                type="button"
+                                onClick={handleSignOut}
+                            >
+                                Sign out
                             </button>
-                        </Link>
+                        </div>
+                    ) : (
+                        <div className="d-flex gap-2">
+                            <Link to="/login">
+                                <button className="btn btn-outline-success">
+                                    Login
+                                </button>
+                            </Link>
 
-                        <Link to="/register">
-                            <button className="btn btn-success">
-                                Sign up
-                            </button>
-                        </Link>
-                    </div>
+                            <Link to="/register">
+                                <button className="btn btn-success">
+                                    Sign up
+                                </button>
+                            </Link>
+                        </div>
+                    )}
                 </div>
             </div>
         </nav>
