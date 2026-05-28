@@ -17,6 +17,7 @@ body,
 }
 
 .login-left {
+    position: relative;
     height: 90vh;
     display: flex;
     flex-direction: column;
@@ -25,6 +26,14 @@ body,
     box-sizing: border-box;
     padding-top: 50px;
     padding-bottom: 50px;
+}
+
+.login-content {
+    position: relative;
+    width: 100%;
+    max-width: 390px;
+    margin-left: clamp(16px, 4vw, 64px);
+    padding-top: 66px;
 }
 
 .login-logo {
@@ -65,10 +74,62 @@ body,
     overflow: hidden;
 }
 
+.auth-page {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    overflow: hidden;
+}
+
 .login-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.close-button {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    z-index: 10;
+
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid #ddd;
+    background: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.close-button::before,
+.close-button::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 2px;
+    border-radius: 999px;
+    background: #111827;
+}
+
+.close-button::before {
+    transform: rotate(45deg);
+}
+
+.close-button::after {
+    transform: rotate(-45deg);
+}
+
+.close-button:hover {
+    border-color: #b8c0cc;
+    background: #f8fafc;
 }
 
 /* Tablet */
@@ -86,6 +147,10 @@ body,
         align-items: center;
         text-align: left;
         padding: 32px 24px;
+    }
+
+    .login-content {
+        margin-left: 0;
     }
 
     .login-logo {

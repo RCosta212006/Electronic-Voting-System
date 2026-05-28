@@ -1,6 +1,7 @@
 import loginImage from "../images/Game_Awards_Login.jpg";
 import logoImage from "../images/Logo.png";
 import AuthForm from "../components/AuthForm";
+import CloseButton from "../components/CloseButton";
 import "../css/Login.css";
 
 function Register() {
@@ -11,14 +12,17 @@ function Register() {
             <div className="login-card">
 
                 <div className="login-left">
+                    <CloseButton />
 
-                    <img
-                        src={logoImage}
-                        alt="Game DSA Awards"
-                        className="login-logo"
-                    />
+                    <div className="login-content">
+                        <img
+                            src={logoImage}
+                            alt="Game DSA Awards"
+                            className="login-logo"
+                        />
 
-                    <AuthForm mode="register" />
+                        <AuthForm mode="register" />
+                    </div>
 
                 </div>
 

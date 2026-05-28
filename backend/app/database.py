@@ -1,8 +1,6 @@
-import os
 from pymongo import MongoClient
 
-MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017")
-MONGO_DB = os.getenv("MONGO_DB", "sve")
+from app.config.settings import MONGO_DB, MONGO_URL
 
 client = MongoClient(MONGO_URL)
 db = client[MONGO_DB]

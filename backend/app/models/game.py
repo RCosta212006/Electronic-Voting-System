@@ -1,5 +1,10 @@
 from pydantic import BaseModel, Field
 
+
+class GameCategoryPublic(BaseModel):
+    id: str
+    name: str
+
 class GameCreate(BaseModel):
     name: str = Field(min_length=2)
     description: str
@@ -20,3 +25,4 @@ class GamePublic(BaseModel):
     release_date: str
     user_score: int
     category_ids: list[str]
+    categories: list[GameCategoryPublic] = Field(default_factory=list)

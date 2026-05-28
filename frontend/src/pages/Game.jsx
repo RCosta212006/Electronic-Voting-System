@@ -72,7 +72,7 @@ function Game() {
 
                     <div className="game-info-row">
                         <span>Developer: {game.developer || "Unknown Studio"}</span>
-                        <span>Platforms: {game.platforms || "PC, PS5, Xbox"}</span>
+                        <span>Platforms: {game.platforms || game.plataforms || "PC, PS5, Xbox"}</span>
                     </div>
                 </div>
             </section>

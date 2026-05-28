@@ -1,5 +1,16 @@
-function CloseButton(){
-    <button type="button" class="btn-close" aria-label="Close"></button>
+import { useNavigate } from "react-router-dom";
+
+function CloseButton() {
+    const navigate = useNavigate();
+
+    return (
+        <button
+            type="button"
+            className="close-button"
+            onClick={() => navigate("/")}
+            aria-label="Close"
+        />
+    );
 }
 
 export default CloseButton;

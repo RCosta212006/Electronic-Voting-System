@@ -1,65 +1,32 @@
-from fastapi import APIRouter, HTTPException
-from bson import ObjectId
+from fastapi import APIRouter, Depends, status
 
-from app.database import categories_collection, games_collection
-from app.models.category import CategoryCreate
+from app.models.category import CategoryCreate, CategoryPublic
+from app.models.game import GamePublic
+from app.services import categories_service
+from app.utils.security import require_admin
+
 
 router = APIRouter(prefix="/categories", tags=["categories"])
 
-def category_to_dict(category):
-    return {
-        "id": str(category["_id"]),
-        "name": category["name"],
-        "image": category["image"],
-        "description": category["description"],
-        "datetime_closes": category["datetime_closes"],
-    }
 
-def game_to_dict(game):
-    return {
-        "id": str(game["_id"]),
-        "name": game["name"],
-        "description": game["description"],
-        "image": game["image"],
-        "developer": game["developer"],
-        "platforms": game["plataforms"],
-        "release_date": game["release_date"],
-        "user_score": game["user_score"],
-        "category_ids": game.get("category_ids", []),
-    }
-
-@router.get("/")
+@router.get("/", response_model=list[CategoryPublic])
 def get_categories():
-    categories = categories_collection.find()
-    return [category_to_dict(category) for category in categories]
+    return categories_service.list_categories()
 
-@router.post("/")
-def create_category(category: CategoryCreate):
-    result = categories_collection.insert_one(category.model_dump())
 
-    return {
-        "id": str(result.inserted_id),
-        **category.model_dump()
-    }
+@router.post("/", response_model=CategoryPublic, status_code=status.HTTP_201_CREATED)
+def create_category(
+    category: CategoryCreate,
+    current_user: dict = Depends(require_admin),
+):
+    return categories_service.create_category(category)
 
-@router.get("/{category_id}")
+
+@router.get("/{category_id}", response_model=CategoryPublic)
 def get_category(category_id: str):
-    category = categories_collection.find_one({"_id": ObjectId(category_id)})
+    return categories_service.get_category(category_id)
 
-    if not category:
-        raise HTTPException(status_code=404, detail="Categoria não encontrada")
 
-    return category_to_dict(category)
-
-@router.get("/{category_id}/games")
+@router.get("/{category_id}/games", response_model=list[GamePublic])
 def get_games_by_category(category_id: str):
-    category = categories_collection.find_one({"_id": ObjectId(category_id)})
-
-    if not category:
-        raise HTTPException(status_code=404, detail="Categoria não encontrada")
-
-    games = games_collection.find({
-        "category_ids": {"$in": [category_id]}
-    })
-
-    return [game_to_dict(game) for game in games]
+    return categories_service.list_games_by_category(category_id)

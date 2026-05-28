@@ -2,23 +2,26 @@ import loginImage from "../images/Game_Awards_Login.jpg";
 import logoImage from "../images/Logo.png";
 import AuthForm from "../components/AuthForm";
 import "../css/Login.css";
+import CloseButton from "../components/CloseButton";
 
 function Login() {
 
     return (
         <section className="login-page">
-
             <div className="login-card">
 
                 <div className="login-left">
+                    <CloseButton />
 
-                    <img
-                        src={logoImage}
-                        alt="Game DSA Awards"
-                        className="login-logo"
-                    />
+                    <div className="login-content">
+                        <img
+                            src={logoImage}
+                            alt="Game DSA Awards"
+                            className="login-logo"
+                        />
 
-                    <AuthForm mode="login" />
+                        <AuthForm mode="login" />
+                    </div>
 
                 </div>
 

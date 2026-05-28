@@ -1,68 +1,28 @@
-from fastapi import APIRouter, HTTPException
-from bson import ObjectId
+from fastapi import APIRouter, Depends, status
 
-from app.database import games_collection, categories_collection
-from app.models.game import GameCreate
+from app.models.game import GameCreate, GamePublic
+from app.services import games_service
+from app.utils.security import require_admin
 
 
 router = APIRouter(prefix="/games", tags=["games"])
 
-def game_to_dict(game):
-    category_ids = game.get("category_ids", [])
 
-    object_category_ids = [ObjectId(category_id) for category_id in category_ids]
-
-    categories = list(categories_collection.find({
-        "_id": {"$in": object_category_ids}
-    }))
-
-    return {
-        "id": str(game["_id"]),
-        "name": game["name"],
-        "description": game["description"],
-        "image": game["image"],
-        "developer": game.get("developer", ""),
-        "plataforms": game.get("plataforms", ""),
-        "release_date": game.get("release_date", ""),
-        "user_score": game.get("user_score", 0),
-        "category_ids": category_ids,
-        "categories": [
-            {
-                "id": str(category["_id"]),
-                "name": category["name"]
-            }
-            for category in categories
-        ]
-    }
-
-@router.get("/")
+@router.get("/", response_model=list[GamePublic])
 def get_games():
-    games = games_collection.find()
-    return [game_to_dict(game) for game in games]
+    return games_service.list_games()
 
-@router.post("/")
-def create_game(game: GameCreate):
-    for category_id in game.category_ids:
-        category = categories_collection.find_one({"_id": ObjectId(category_id)})
 
-        if not category:
-            raise HTTPException(
-                status_code=404,
-                detail=f"Categoria não encontrada: {category_id}"
-            )
+@router.post("/", response_model=GamePublic, status_code=status.HTTP_201_CREATED)
+def create_game(game: GameCreate, current_user: dict = Depends(require_admin)):
+    return games_service.create_game(game)
 
-    result = games_collection.insert_one(game.model_dump())
 
-    return {
-        "id": str(result.inserted_id),
-        **game.model_dump()
-    }
-
-@router.get("/{game_id}")
+@router.get("/{game_id}", response_model=GamePublic)
 def get_game(game_id: str):
-    game = games_collection.find_one({"_id": ObjectId(game_id)})
+    return games_service.get_game(game_id)
 
-    if not game:
-        raise HTTPException(status_code=404, detail="Jogo não encontrado")
 
-    return game_to_dict(game)
+@router.delete("/{game_id}")
+def delete_game(game_id: str, current_user: dict = Depends(require_admin)):
+    return games_service.delete_game(game_id)
