@@ -3,14 +3,18 @@ import LowScrollBar from "../components/LowScrollBar";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import { voteForGame } from "../services/voteService";
 
 function Games() {
     const { categoryId } = useParams();
 
     const [games, setGames] = useState([]);
     const [category, setCategory] = useState(null);
+    const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [voteMessage, setVoteMessage] = useState("");
+    const [voteError, setVoteError] = useState("");
 
     useEffect(() => {
         async function loadData() {
@@ -29,6 +33,15 @@ function Games() {
                 }
 
                 setCategory(categoryData);
+
+                const categoriesResponse = await fetch("http://localhost:8000/categories/");
+                const categoriesData = await categoriesResponse.json();
+
+                if (!categoriesResponse.ok) {
+                    throw new Error(categoriesData.detail || "Erro ao carregar categorias.");
+                }
+
+                setCategories(categoriesData);
 
                 const gamesResponse = await fetch(
                     `http://localhost:8000/categories/${categoryId}/games`
@@ -54,6 +67,41 @@ function Games() {
         }
     }, [categoryId]);
 
+    useEffect(() => {
+        if (!voteMessage && !voteError) {
+            return;
+        }
+
+        const timeoutId = setTimeout(() => {
+            setVoteMessage("");
+            setVoteError("");
+        }, 2000);
+
+        return () => clearTimeout(timeoutId);
+    }, [voteMessage, voteError]);
+
+    async function handleVote(event, gameId) {
+        event.preventDefault();
+        event.stopPropagation();
+        setVoteMessage("");
+        setVoteError("");
+
+        try {
+            const vote = await voteForGame({ categoryId, gameId });
+
+            setGames((currentGames) =>
+                currentGames.map((game) =>
+                    game.id === gameId
+                        ? { ...game, vote_count: vote.vote_count }
+                        : game
+                )
+            );
+            setVoteMessage("Voto registado com sucesso.");
+        } catch (err) {
+            setVoteError(err.message);
+        }
+    }
+
     return (
         <>
             <NavBar></NavBar>
@@ -78,15 +126,30 @@ function Games() {
                     </div>
                 )}
 
+                {voteMessage && (
+                    <div className="alert alert-success">
+                        {voteMessage}
+                    </div>
+                )}
+
+                {voteError && (
+                    <div className="alert alert-danger">
+                        {voteError}
+                    </div>
+                )}
+
                 {!loading && !error && games.length === 0 && (
                     <p>Não existem jogos nesta categoria.</p>
                 )}
 
                 {!loading && !error && games.length > 0 && (
-                    <GameList games={games} />
+                    <GameList games={games} onVote={handleVote} />
                 )}
 
-                <LowScrollBar />
+                <LowScrollBar
+                    categories={categories}
+                    currentCategoryId={categoryId}
+                />
             </div>
         </>
     );

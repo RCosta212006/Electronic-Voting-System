@@ -1,6 +1,6 @@
 import "../css/GameCard.css";
 
-function GameCard({ data, type }) {
+function GameCard({ data, type, onVote }) {
     const isGame = type === "game";
     const maxTitleLength = 28;
 
@@ -36,10 +36,19 @@ function GameCard({ data, type }) {
 
             <div className="card-footer border-0">
                 {isGame ? (
+                    <>
+                        <small className="d-block text-center text-body-secondary mb-2">
+                            Votes: {data.vote_count || 0}
+                        </small>
 
-                    <button className="btn btn-info w-100">
-                        Vote
-                    </button>
+                        <button
+                            className="btn btn-info w-100"
+                            type="button"
+                            onClick={onVote}
+                        >
+                            Vote
+                        </button>
+                    </>
 
                 ) : (
 

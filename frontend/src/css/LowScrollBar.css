@@ -9,6 +9,14 @@
     margin-top: 40px;
 }
 
+.low-scrollbar.only-next {
+    justify-content: flex-end;
+}
+
+.low-scrollbar.only-previous {
+    justify-content: flex-start;
+}
+
 .category-nav-button {
     display: flex;
     align-items: center;
@@ -16,8 +24,14 @@
 
     background: transparent;
     border: none;
+    color: inherit;
+    text-decoration: none;
 
     cursor: pointer;
+}
+
+.category-nav-button:hover {
+    color: inherit;
 }
 
 .category-nav-text {

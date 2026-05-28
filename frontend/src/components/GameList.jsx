@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import GameCard from "./GameCard";
 
-function GameList({ games }) {
+function GameList({ games, onVote }) {
     return (
         <div className="row g-4 justify-content-center">
             {games.map((game) => (
@@ -10,7 +10,11 @@ function GameList({ games }) {
                         to={`/game/${game.id}`}
                         className="text-decoration-none w-100"
                     >
-                        <GameCard data={game} type="game" />
+                        <GameCard
+                            data={game}
+                            type="game"
+                            onVote={(event) => onVote(event, game.id)}
+                        />
                     </Link>
                 </div>
             ))}

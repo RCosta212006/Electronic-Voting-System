@@ -3,6 +3,7 @@ from fastapi import HTTPException, status
 from app.database import categories_collection, games_collection
 from app.models.category import CategoryCreate
 from app.services.games_service import serialize_game
+from app.services.votes_service import count_votes_for_game_in_category
 from app.utils.object_id import parse_object_id
 
 
@@ -52,4 +53,10 @@ def list_games_by_category(category_id: str) -> list[dict]:
         "category_ids": {"$in": [category_id]}
     })
 
-    return [serialize_game(game, include_categories=False) for game in games]
+    return [
+        {
+            **serialize_game(game, include_categories=False),
+            "vote_count": count_votes_for_game_in_category(str(game["_id"]), category_id),
+        }
+        for game in games
+    ]
