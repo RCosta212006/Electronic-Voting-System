@@ -26,13 +26,13 @@ export async function loginUser({ email, password }) {
     return data;
 }
 
-export async function registerUser({ name, email, password }) {
+export async function registerUser({ name, email, password, role }) {
     const response = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, password, role }),
     });
 
     return parseResponse(response);

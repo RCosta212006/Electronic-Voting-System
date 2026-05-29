@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, status
 
-from app.models.category import CategoryCreate, CategoryPublic
+from app.models.category import CategoryCreate, CategoryPublic, CategoryUpdate
 from app.models.game import GamePublic, VoteResponse
 from app.services import categories_service, votes_service
-from app.utils.security import get_current_user, require_admin
+from app.utils.security import get_current_user
 
 
 router = APIRouter(prefix="/categories", tags=["categories"])
@@ -15,10 +15,7 @@ def get_categories():
 
 
 @router.post("/", response_model=CategoryPublic, status_code=status.HTTP_201_CREATED)
-def create_category(
-    category: CategoryCreate,
-    current_user: dict = Depends(require_admin),
-):
+def create_category(category: CategoryCreate):
     return categories_service.create_category(category)
 
 
@@ -27,9 +24,21 @@ def get_category(category_id: str):
     return categories_service.get_category(category_id)
 
 
+@router.patch("/{category_id}", response_model=CategoryPublic)
+def update_category(
+    category_id: str,
+    category: CategoryUpdate,
+):
+    return categories_service.update_category(category_id, category)
+
+
 @router.get("/{category_id}/games", response_model=list[GamePublic])
 def get_games_by_category(category_id: str):
     return categories_service.list_games_by_category(category_id)
+
+@router.delete("/{category_id}")
+def delete_category(category_id: str):
+    return categories_service.delete_category(category_id)
 
 
 @router.post(

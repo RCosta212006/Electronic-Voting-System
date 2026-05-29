@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { voteForGame } from "../services/voteService";
+import "../css/Games.css";
 
 function Games() {
     const { categoryId } = useParams();
@@ -80,11 +81,38 @@ function Games() {
         return () => clearTimeout(timeoutId);
     }, [voteMessage, voteError]);
 
+    useEffect(() => {
+        if (!category || category.is_closed) {
+            return;
+        }
+
+        const closingTime = new Date(category.datetime_closes).getTime();
+        if (Number.isNaN(closingTime) || closingTime <= Date.now()) {
+            setCategory((currentCategory) =>
+                currentCategory ? { ...currentCategory, is_closed: true } : currentCategory
+            );
+            return;
+        }
+
+        const timeoutId = setTimeout(() => {
+            setCategory((currentCategory) =>
+                currentCategory ? { ...currentCategory, is_closed: true } : currentCategory
+            );
+        }, closingTime - Date.now() + 1000);
+
+        return () => clearTimeout(timeoutId);
+    }, [category]);
+
     async function handleVote(event, gameId) {
         event.preventDefault();
         event.stopPropagation();
         setVoteMessage("");
         setVoteError("");
+
+        if (category?.is_closed) {
+            setVoteError("Esta votação já encerrou.");
+            return;
+        }
 
         try {
             const vote = await voteForGame({ categoryId, gameId });
@@ -117,7 +145,8 @@ function Games() {
                 )}
             </div>
 
-            <div className="page-container">
+            <div className="page-container games-page-container">
+                <div className="games-content">
                 {loading && <p>A carregar jogos...</p>}
 
                 {error && (
@@ -143,13 +172,21 @@ function Games() {
                 )}
 
                 {!loading && !error && games.length > 0 && (
-                    <GameList games={games} onVote={handleVote} />
+                    <GameList
+                        games={games}
+                        onVote={handleVote}
+                        votingDisabled={category?.is_closed}
+                    />
                 )}
 
-                <LowScrollBar
-                    categories={categories}
-                    currentCategoryId={categoryId}
-                />
+                </div>
+
+                <div className="games-bottom-nav">
+                    <LowScrollBar
+                        categories={categories}
+                        currentCategoryId={categoryId}
+                    />
+                </div>
             </div>
         </>
     );

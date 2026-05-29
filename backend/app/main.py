@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routes.auth import router as auth_router
 from app.routes.categories import router as categories_router
 from app.routes.games import router as games_router
+from app.routes.users import router as users_router
 
 app = FastAPI(title="SVE API")
 
@@ -25,3 +26,4 @@ def root():
 app.include_router(auth_router)
 app.include_router(categories_router)
 app.include_router(games_router)
+app.include_router(users_router)

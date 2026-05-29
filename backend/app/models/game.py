@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from typing import Optional
 
 
 class GameCategoryPublic(BaseModel):
@@ -14,6 +15,16 @@ class GameCreate(BaseModel):
     release_date: str
     user_score: int
     category_ids: list[str]
+
+class GameUpdate(BaseModel):
+    name: Optional[str] = Field(default=None, min_length=2)
+    description: Optional[str] = None
+    image: Optional[str] = None
+    developer: Optional[str] = None
+    platforms: Optional[str] = None
+    release_date: Optional[str] = None
+    user_score: Optional[int] = None
+    category_ids: Optional[list[str]] = None
 
 class GamePublic(BaseModel):
     id: str

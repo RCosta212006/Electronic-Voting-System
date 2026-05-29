@@ -15,7 +15,7 @@ def register(user: UserCreate):
         "name": user.name,
         "email": user.email.lower(),
         "password_hash": hash_password(user.password),
-        "role": "voter",
+        "role": user.role,
     }
 
     try:
@@ -27,6 +27,7 @@ def register(user: UserCreate):
         "id": str(result.inserted_id),
         "name": user.name,
         "email": user.email.lower(),
+        "role": user.role,
     }
 
 

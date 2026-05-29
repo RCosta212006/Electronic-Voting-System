@@ -1,0 +1,18 @@
+.games-page-container {
+    min-height: calc(100vh - 220px);
+    display: flex;
+    flex-direction: column;
+}
+
+.games-content {
+    width: 100%;
+}
+
+.games-bottom-nav {
+    margin-top: auto;
+    width: 100%;
+}
+
+.games-bottom-nav .low-scrollbar {
+    margin-top: 0;
+}

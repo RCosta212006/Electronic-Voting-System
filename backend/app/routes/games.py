@@ -1,8 +1,7 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, status
 
-from app.models.game import GameCreate, GamePublic
+from app.models.game import GameCreate, GamePublic, GameUpdate
 from app.services import games_service
-from app.utils.security import require_admin
 
 
 router = APIRouter(prefix="/games", tags=["games"])
@@ -14,7 +13,7 @@ def get_games():
 
 
 @router.post("/", response_model=GamePublic, status_code=status.HTTP_201_CREATED)
-def create_game(game: GameCreate, current_user: dict = Depends(require_admin)):
+def create_game(game: GameCreate):
     return games_service.create_game(game)
 
 
@@ -23,6 +22,14 @@ def get_game(game_id: str):
     return games_service.get_game(game_id)
 
 
+@router.patch("/{game_id}", response_model=GamePublic)
+def update_game(
+    game_id: str,
+    game: GameUpdate,
+):
+    return games_service.update_game(game_id, game)
+
+
 @router.delete("/{game_id}")
-def delete_game(game_id: str, current_user: dict = Depends(require_admin)):
+def delete_game(game_id: str):
     return games_service.delete_game(game_id)

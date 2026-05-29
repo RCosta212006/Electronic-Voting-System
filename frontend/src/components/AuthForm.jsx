@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { loginUser, registerUser } from "../services/authService";
+import RoleRadioGroup from "./RoleRadioGroup";
 
 function AuthForm({ mode }) {
     const navigate = useNavigate();
@@ -12,6 +13,7 @@ function AuthForm({ mode }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [role, setRole] = useState("voter");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -28,7 +30,7 @@ function AuthForm({ mode }) {
             setLoading(true);
 
             if (isRegister) {
-                await registerUser({ name, email, password });
+                await registerUser({ name, email, password, role });
                 await loginUser({ email, password });
             } else {
                 await loginUser({ email, password });
@@ -106,24 +108,33 @@ function AuthForm({ mode }) {
             </div>
 
             {isRegister && (
-                <div className="mb-4">
-                    <label
-                        className="form-label"
-                        htmlFor="confirmPassword"
-                    >
-                        Confirm Password
-                    </label>
+                <>
+                    <div className="mb-4">
+                        <label
+                            className="form-label"
+                            htmlFor="confirmPassword"
+                        >
+                            Confirm Password
+                        </label>
 
-                    <input
-                        type="password"
-                        id="confirmPassword"
-                        className="form-control form-control-lg"
-                        value={confirmPassword}
-                        onChange={(event) => setConfirmPassword(event.target.value)}
-                        minLength={6}
-                        required
-                    />
-                </div>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            className="form-control form-control-lg"
+                            value={confirmPassword}
+                            onChange={(event) => setConfirmPassword(event.target.value)}
+                            minLength={6}
+                            required
+                        />
+                    </div>
+
+                    <div className="mb-4">
+                        <label className="form-label">
+                            Account type
+                        </label>
+                        <RoleRadioGroup value={role} onChange={setRole} />
+                    </div>
+                </>
             )}
 
             <button

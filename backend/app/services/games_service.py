@@ -1,7 +1,7 @@
 from fastapi import HTTPException, status
 
 from app.database import categories_collection, games_collection
-from app.models.game import GameCreate
+from app.models.game import GameCreate, GameUpdate
 from app.utils.object_id import parse_object_id
 
 
@@ -42,16 +42,7 @@ def list_games() -> list[dict]:
 
 
 def create_game(game: GameCreate) -> dict:
-    for category_id in game.category_ids:
-        category = categories_collection.find_one({
-            "_id": parse_object_id(category_id, "category_id")
-        })
-
-        if not category:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"Categoria nao encontrada: {category_id}",
-            )
+    validate_category_ids(game.category_ids)
 
     game_doc = game.model_dump()
     result = games_collection.insert_one(game_doc)
@@ -61,6 +52,19 @@ def create_game(game: GameCreate) -> dict:
         **game_doc,
         "categories": [],
     }
+
+
+def validate_category_ids(category_ids: list[str]) -> None:
+    for category_id in category_ids:
+        category = categories_collection.find_one({
+            "_id": parse_object_id(category_id, "category_id")
+        })
+
+        if not category:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Categoria nao encontrada: {category_id}",
+            )
 
 
 def get_game(game_id: str) -> dict:
@@ -73,6 +77,30 @@ def get_game(game_id: str) -> dict:
         )
 
     return serialize_game(game)
+
+
+def update_game(game_id: str, game: GameUpdate) -> dict:
+    game_object_id = parse_object_id(game_id, "game_id")
+    update_doc = game.model_dump(exclude_unset=True)
+
+    if "category_ids" in update_doc:
+        validate_category_ids(update_doc["category_ids"])
+
+    if not update_doc:
+        return get_game(game_id)
+
+    result = games_collection.update_one(
+        {"_id": game_object_id},
+        {"$set": update_doc},
+    )
+
+    if result.matched_count == 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Jogo nao encontrado",
+        )
+
+    return get_game(game_id)
 
 
 def delete_game(game_id: str) -> dict:

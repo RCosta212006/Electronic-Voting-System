@@ -1,8 +1,47 @@
+import { useEffect, useState } from "react";
 import "../css/GameCard.css";
 
-function GameCard({ data, type, onVote }) {
+function getCountdown(datetimeCloses) {
+    const closesAt = new Date(datetimeCloses).getTime();
+    const difference = closesAt - Date.now();
+
+    if (!datetimeCloses || Number.isNaN(closesAt) || difference <= 0) {
+        return "Voting closed";
+    }
+
+    const totalSeconds = Math.floor(difference / 1000);
+    const days = Math.floor(totalSeconds / 86400);
+    const hours = Math.floor((totalSeconds % 86400) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    if (days > 0) {
+        return `${days}d ${hours}h ${minutes}m`;
+    }
+
+    return `${hours}h ${minutes}m ${seconds}s`;
+}
+
+function GameCard({ data, type, onVote, votingDisabled }) {
     const isGame = type === "game";
+    const [countdown, setCountdown] = useState(
+        getCountdown(data.datetime_closes)
+    );
     const maxTitleLength = 28;
+
+    useEffect(() => {
+        if (isGame) {
+            return;
+        }
+
+        setCountdown(getCountdown(data.datetime_closes));
+
+        const intervalId = setInterval(() => {
+            setCountdown(getCountdown(data.datetime_closes));
+        }, 1000);
+
+        return () => clearInterval(intervalId);
+    }, [data.datetime_closes, isGame]);
 
     const title =
         data.name.length > maxTitleLength
@@ -25,9 +64,15 @@ function GameCard({ data, type, onVote }) {
 
                     <div className="card-bottom">
                         <hr className="divider" />
-                        <small className="text-body-secondary close-date">
-                            Closes in: {data.datetime_closes}
-                        </small>
+                        {data.is_closed ? (
+                            <small className="text-body-secondary close-date">
+                                Winner: {data.winner ? `${data.winner.name} (${data.winner.vote_count} votes)` : "No votes yet"}
+                            </small>
+                        ) : (
+                            <small className="text-body-secondary close-date">
+                                Closes in: {countdown}
+                            </small>
+                        )}
                     </div>
 
                 )}
@@ -45,8 +90,9 @@ function GameCard({ data, type, onVote }) {
                             className="btn btn-info w-100"
                             type="button"
                             onClick={onVote}
+                            disabled={votingDisabled}
                         >
-                            Vote
+                            {votingDisabled ? "Voting closed" : "Vote"}
                         </button>
                     </>
 
