@@ -68,11 +68,29 @@ function Game() {
                 <img src={game.image} alt={game.name} className="game-hero-image"/>
 
                 <div className="game-hero-content">
-                    <h1>{game.name}</h1>
+                    <div className="game-hero-grid">
+                        <div className="game-title-block">
+                            <h1>{game.name}</h1>
 
-                    <div className="game-info-row">
-                        <span>Developer: {game.developer || "Unknown Studio"}</span>
-                        <span>Platforms: {game.platforms || game.plataforms || "PC, PS5, Xbox"}</span>
+                            <div className="game-info-row">
+                                <span>Developer: {game.developer || "Unknown Studio"}</span>
+                                <span>Platforms: {game.platforms || game.plataforms || "PC, PS5, Xbox"}</span>
+                            </div>
+                        </div>
+
+                        <aside className="game-sidebar game-hero-sidebar">
+                            <div className="release-panel">
+                                <div>
+                                    <span>Release Date</span>
+                                    <strong>{game.release_date || "N/A"}</strong>
+                                </div>
+
+                                <div>
+                                    <span>User Score</span>
+                                    <strong>{game.user_score || "N/A"}</strong>
+                                </div>
+                            </div>
+                        </aside>
                     </div>
                 </div>
             </section>
@@ -89,9 +107,7 @@ function Game() {
                         </p>
 
                         <p>
-                            This section can later include a longer description,
-                            game mechanics, story details, release information and
-                            voting context.
+                            {game.technical_description || "No technical description available."}
                         </p>
                     </section>
 
@@ -111,20 +127,6 @@ function Game() {
                     </section>
 
                 </div>
-
-                <aside className="game-sidebar">
-                    <div className="release-panel">
-                        <div>
-                            <span>Release Date</span>
-                            <strong>{game.release_date || "N/A"}</strong>
-                        </div>
-
-                        <div>
-                            <span>User Score</span>
-                            <strong>{game.user_score || "N/A"}</strong>
-                        </div>
-                    </div>
-                </aside>
 
             </section>
 

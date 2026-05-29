@@ -9,6 +9,7 @@ class GameCategoryPublic(BaseModel):
 class GameCreate(BaseModel):
     name: str = Field(min_length=2)
     description: str
+    technical_description: str = ""
     image: str
     developer: str
     platforms: str
@@ -19,6 +20,7 @@ class GameCreate(BaseModel):
 class GameUpdate(BaseModel):
     name: Optional[str] = Field(default=None, min_length=2)
     description: Optional[str] = None
+    technical_description: Optional[str] = None
     image: Optional[str] = None
     developer: Optional[str] = None
     platforms: Optional[str] = None
@@ -30,6 +32,7 @@ class GamePublic(BaseModel):
     id: str
     name: str
     description: str
+    technical_description: str = ""
     image: str
     developer: str
     platforms: str

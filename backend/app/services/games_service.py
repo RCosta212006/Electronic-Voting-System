@@ -20,6 +20,7 @@ def serialize_game(game: dict, include_categories: bool = True) -> dict:
         "id": str(game["_id"]),
         "name": game["name"],
         "description": game["description"],
+        "technical_description": game.get("technical_description", ""),
         "image": game["image"],
         "developer": game.get("developer", ""),
         "platforms": game.get("platforms", game.get("plataforms", "")),
