@@ -2,7 +2,6 @@ import GameList from "../components/GameList";
 import LowScrollBar from "../components/LowScrollBar";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import NavBar from "../components/NavBar";
 import { voteForGame } from "../services/voteService";
 import "../css/Games.css";
 
@@ -132,7 +131,6 @@ function Games() {
 
     return (
         <>
-            <NavBar></NavBar>
             <div className="page-header">
                 <h1>
                     {category ? category.name : "Jogos"}

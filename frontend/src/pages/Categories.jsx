@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import CategoryList from "../components/CategoryList";
-import NavBar from "../components/NavBar";
 
 function Categories() {
     const [categories, setCategories] = useState([]);
@@ -55,9 +54,12 @@ function Categories() {
 
     return (
         <>
-            <NavBar/>
             <div className="page-header">
-                <h1>Categorias</h1>
+                <h1>Game DSA Awards</h1>
+                <p>
+                    Explore the official categories, follow live voting windows,
+                    and enter each award booth to support the standout games.
+                </p>
             </div>
 
             <div className="page-container">

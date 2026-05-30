@@ -1,11 +1,16 @@
 .games-page-container {
-    min-height: calc(100vh - 220px);
+    min-height: calc(100vh - 280px);
     display: flex;
     flex-direction: column;
 }
 
 .games-content {
     width: 100%;
+}
+
+.games-content > p,
+.page-container > p {
+    color: var(--color-muted);
 }
 
 .games-bottom-nav {

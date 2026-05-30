@@ -1,14 +1,16 @@
 .game-detail-page {
     width: min(100% - 2rem, 1200px);
     margin-inline: auto;
+    padding-top: clamp(2rem, 5vw, 4rem);
     padding-bottom: 4rem;
+    color: var(--color-text);
 }
 
 .game-hero {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: 8px;
     margin-bottom: 2rem;
 }
 
@@ -20,7 +22,7 @@
 
 .game-hero-content {
     width: 100%;
-    padding: clamp(1.5rem, 4vw, 3rem) 0;
+    padding: clamp(1.5rem, 4vw, 3rem);
 }
 
 .game-hero-grid {
@@ -32,16 +34,19 @@
 
 .game-hero h1 {
     max-width: 800px;
-    font-size: clamp(2.5rem, 8vw, 5.5rem);
-    line-height: 0.95;
+    color: var(--color-cream);
+    font-size: clamp(2.4rem, 8vw, 5rem);
+    line-height: 1;
     margin-bottom: 1rem;
-    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 0;
 }
 
 .game-info-row {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+    color: var(--color-muted);
     font-size: 0.9rem;
 }
 
@@ -57,11 +62,14 @@
 
 .game-section h2 {
     margin-bottom: 1rem;
-    text-transform: uppercase;
+    color: var(--color-cream);
     font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 0;
 }
 
 .game-section p {
+    color: var(--color-muted);
     line-height: 1.7;
 }
 
@@ -81,7 +89,7 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    border: 1px solid currentColor;
+    border: 1px solid rgba(236, 223, 210, 0.42);
     padding: 1.25rem;
     border-radius: 8px;
 }
@@ -93,8 +101,13 @@
 }
 
 .release-panel span {
-    text-transform: uppercase;
+    color: var(--color-silver);
     font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.release-panel strong {
+    color: var(--color-cream);
 }
 
 .nomination-grid {
@@ -105,19 +118,18 @@
 
 .nomination-card {
     min-height: 90px;
-    border: 1px solid currentColor;
-    border-radius: 6px;
+    border: 1px solid rgba(236, 223, 210, 0.42);
+    border-radius: 8px;
     padding: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+    color: var(--color-cream);
     font-size: 0.85rem;
-    text-transform: uppercase;
     font-weight: 700;
 }
 
-/* Responsivo */
 @media (max-width: 900px) {
     .game-hero-grid {
         grid-template-columns: 1fr;
