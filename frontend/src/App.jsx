@@ -11,6 +11,7 @@ import Creators from "./pages/Creators";
 import Game from "./pages/Game";
 
 import "./App.css";
+import Home from "./pages/Home";
 
 function AppContent() {
     const location = useLocation();
@@ -25,7 +26,7 @@ function AppContent() {
 
             <main className={!hideNavBar ? "page-with-navbar" : ""}>
                 <Routes>
-                    <Route path="/" element={<Categories />} />
+                    <Route path="/" element={<Home />} />
                     <Route path="/categories" element={<Categories />} />
                     <Route path="/games/:categoryId" element={<Games />} />
                     <Route path="/game/:gameId" element={<Game />} />
