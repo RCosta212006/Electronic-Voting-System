@@ -1,13 +1,13 @@
-import "../css/AboutCard.css";
+import "../css/CreatorCard.css";
 
 function AboutCard({ name, image, github }) {
 
     return (
-        <div class="card-about">
+        <div className="card-about">
             <div className="card-border-top">
             </div>
             <div className="img-about">
-                <img href={image}></img>
+                {image && <img src={image} alt={name} />}
             </div>
             <span> {name}</span>
             <a href={github}>

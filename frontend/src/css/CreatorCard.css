@@ -3,7 +3,7 @@
     height: 254px;
     background: #3405a3;
     border-radius: 15px;
-    box-shadow: 1px 5px 60px 0px #100a886b;
+    box-shadow: 1px 5px 60px 0px #eeeeee6b;
 }
 
 .card-about .card-border-top {
@@ -26,10 +26,18 @@
 .card-about .img-about {
     width: 70px;
     height: 80px;
-    background: #6b64f3;
+    background: #221c91;
     border-radius: 15px;
     margin: auto;
     margin-top: 25px;
+    overflow: hidden;
+}
+
+.card-about .img-about img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .card-about button {

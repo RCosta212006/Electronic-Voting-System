@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "../css/Game.css";
+import LoadingCards from "../components/LoadingCards";
 
 function Game() {
     const { gameId } = useParams();
@@ -38,7 +39,7 @@ function Game() {
     if (loading) {
         return (
             <main className="game-detail-page">
-                <p>A carregar jogo...</p>
+                <LoadingCards></LoadingCards>
             </main>
         );
     }

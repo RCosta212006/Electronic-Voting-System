@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import CategoryList from "../components/CategoryList";
+import LoadingCards from "../components/LoadingCards";
 
 function Categories() {
     const [categories, setCategories] = useState([]);
@@ -63,7 +64,7 @@ function Categories() {
             </div>
 
             <div className="page-container">
-                {loading && <p>A carregar categorias...</p>}
+                {loading && <LoadingCards></LoadingCards>}
 
                 {error && (
                     <div className="alert alert-danger">

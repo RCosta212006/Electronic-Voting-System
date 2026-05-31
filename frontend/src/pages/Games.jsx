@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { voteForGame } from "../services/voteService";
 import "../css/Games.css";
+import LoadingCards from "../components/LoadingCards";
 
 function Games() {
     const { categoryId } = useParams();
@@ -145,7 +146,7 @@ function Games() {
 
             <div className="page-container games-page-container">
                 <div className="games-content">
-                {loading && <p>A carregar jogos...</p>}
+                {loading && <LoadingCards></LoadingCards>}
 
                 {error && (
                     <div className="alert alert-danger">
