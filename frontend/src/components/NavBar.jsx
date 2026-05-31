@@ -68,7 +68,7 @@ function NavBar() {
 
                         <li className="nav-item">
                             <Link className="nav-link" to="/about">
-                                About
+                                About us
                             </Link>
                         </li>
                     </ul>
