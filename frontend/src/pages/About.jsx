@@ -27,6 +27,4 @@ function About(){
     )
 }
 
-<TODO>Falta colocar imagem</TODO>
-
 export default About;
